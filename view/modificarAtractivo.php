@@ -99,8 +99,11 @@ include '../public/header.php';
         ?>
         <div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em;">
             <div class="col-md-offset-1 col-md-10">
+                <div class="col-md-offset-3 col-md-6" style="text-align: center;">
+                    <img style="max-width: 60%;" src="../images/error.png">
+                </div>
                 <div class="col-md-12" style="text-align: center;">
-                    <h2>Error al cargar la página.</h2>
+                    <h2>Error al cargar la p&aacute;gina.</h2>
                 </div>
             </div>
         </div>
