@@ -1,4 +1,7 @@
 <?php
+include_once '../data/rutaData.php';
+
+    private $rutaData = new rutaData();
 
 function euclides($datosUsuario, $registrosBaseDatos, $atributos) {
     //Diferencia que determina al mas similar
@@ -23,7 +26,11 @@ function euclides($datosUsuario, $registrosBaseDatos, $atributos) {
             $ruta[] = $registroActual;
         }//if similitud minima
     }//for Base de datos
-    //Se retorna el dato obtenido 
+    //se registran las rutas en la tabla tb_ruta_euclides
+    foreach ($ruta as $rutaActual) {
+         $this->rutaData->registrarRutaEuclides($rutaActual);
+    }//End foreach ($ruta as $rutaActual)
+    //Se retorna el dato obtenido
     return $ruta;
 }//euclides
 
