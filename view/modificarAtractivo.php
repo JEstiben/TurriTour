@@ -4,15 +4,25 @@ include '../public/header.php';
 
 <?php
     include '../business/atractivoBusiness.php';
-
-    $atractivoBusiness = new atractivoBusiness();
-    $atractivo = $atractivoBusiness->obtenerAtractivoId($_POST["idAtractivo"]);
+    if(session_status() != 2){
+        session_start();
+    }
+    if(isset($_SESSION['Usuario'])){
+        $atractivoBusiness = new atractivoBusiness();
+        $atractivo = $atractivoBusiness->obtenerAtractivoId($_POST["idAtractivo"]);
+    }
 ?>
 
 <!-- Contenido -->
 <div class="about">
 	<div class="container">
-		<div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em;">
+		<?php
+            if(session_status() != 2){
+                session_start();
+            }
+            if(isset($_SESSION['Usuario'])){
+        ?>
+        <div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em;">
 			<div class="col-md-offset-1 col-md-10">
                 <form method="post" id="formulario" enctype="multipart/form-data">
     				<div class="col-md-12" style="text-align: center;">
@@ -84,6 +94,19 @@ include '../public/header.php';
                 </form>
 			</div>
 		</div>
+        <?php
+            }else{
+        ?>
+        <div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em;">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="col-md-12" style="text-align: center;">
+                    <h2>Error al cargar la página.</h2>
+                </div>
+            </div>
+        </div>
+        <?php
+            }
+        ?>
 	</div>
 </div>
 <!-- Contenido -->

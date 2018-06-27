@@ -12,6 +12,12 @@ include '../public/header.php';
 <!-- Contenido -->
 <div class="about">
 	<div class="container">
+        <?php
+            if(session_status() != 2){
+                session_start();
+            }
+            if(isset($_SESSION['Usuario'])){
+        ?>
 		<?php
             foreach ($atractivos as $atractivo) {
 echo '<div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em; margin-top: 1em; margin-bottom: 1em;">';
@@ -35,8 +41,20 @@ echo '<div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-
 	echo '</div>';
 echo '</div>';
             }//foreach
-        ?>   
-
+        ?>
+        <?php
+            }else{
+        ?>
+        <div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em;">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="col-md-12" style="text-align: center;">
+                    <h2>Error al cargar la página.</h2>
+                </div>
+            </div>
+        </div>
+        <?php
+            }
+        ?>
 	</div>
 </div>
 <!-- Contenido -->
