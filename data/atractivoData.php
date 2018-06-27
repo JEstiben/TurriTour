@@ -1,11 +1,8 @@
 <?php
-if (isset($_POST['crearAtractivo']) || isset($_POST['actualizarAtractivo']) || isset($_POST['eliminarAtractivo'])) {
-    include_once '../../data/data.php';
-    include '../../domain/atractivo/atractivo.php';
-}else {
-    include_once '../data/data.php';
-    include '../domain/atractivo/atractivo.php';
-}
+
+include_once 'data.php';
+include '../domain/atractivo/atractivo.php';
+
 class atractivoData extends Data {
     public function crearAtractivo($atractivo) {
 

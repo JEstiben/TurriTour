@@ -1,9 +1,7 @@
 <?php
-if (isset($_POST['crearAtractivo']) || isset($_POST['actualizarAtractivo']) || isset($_POST['eliminarAtractivo'])) {
-    include_once '../../data/atractivoData/atractivoData.php';
-}else {
-    include_once '../data/atractivoData/atractivoData.php';
-}
+
+include_once '../data/atractivoData/atractivoData.php';
+
 class atractivoBusiness {
 
     private $atractivoData;

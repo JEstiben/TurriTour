@@ -51,7 +51,7 @@ include '../public/footer.php';
             "idAtractivo" : idAtractivo
         };
 
-        $.post("../business/atractivoBusiness/atractivoAction.php",parameters, function(data){
+        $.post("../business/atractivoAction.php",parameters, function(data){
         	if(data == "true"){
         		location.reload();
                 mostrarMensaje("success", "Éxito al eliminar el atractivo.");

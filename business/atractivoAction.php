@@ -1,6 +1,6 @@
 <?php
 
-include './atractivoBusiness.php';
+include 'atractivoBusiness.php';
 
 if (isset($_POST['crearAtractivo'])) {
 	$tipo = $_FILES["imagen"]["type"];

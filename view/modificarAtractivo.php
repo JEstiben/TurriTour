@@ -38,6 +38,18 @@ include '../public/header.php';
 					<div class="col-md-offset-1 col-md-4" style="text-align: center;">
 						<label>Tipo Camino</label>
                         <select id="tipo_camino" name="tipo_camino" class="form-control">
+                            <?php
+                                if($atractivo->getNombreAtractivo() == "Asfalto"){
+                            ?>
+                            <?php
+                                }else if(){
+                            ?>
+                            <?php
+                                }else if(){
+                            ?>
+                            <?php
+                                }
+                            ?>
                             <option selected="true" value="Asfalto">Asfalto</option>
                             <option value="Piedra">Piedra</option>
                             <option value="Tierra">Tierra</option>
@@ -106,7 +118,7 @@ include '../public/footer.php';
       	formData.append("latitud", document.getElementById("latitud").value);
       	formData.append("longitud", document.getElementById("longitud").value);
       	$.ajax({
-		    url: '../business/atractivoBusiness/atractivoAction.php',
+		    url: '../business/atractivoAction.php',
             type: "POST",
 		    dataType: "html",
 		    data: formData,

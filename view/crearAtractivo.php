@@ -98,7 +98,7 @@ include '../public/footer.php';
       	formData.append("latitud", document.getElementById("latitud").value);
       	formData.append("longitud", document.getElementById("longitud").value);
       	$.ajax({
-		    url: '../business/atractivoBusiness/atractivoAction.php',
+		    url: '../business/atractivoAction.php',
             type: "POST",
 		    dataType: "html",
 		    data: formData,
