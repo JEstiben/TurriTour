@@ -54,6 +54,12 @@
 				pagination : true,
 			});
 		});
+
+		function cerrarSesion() {
+			$.post("../business/sesionAction.php",{'cerrarSesion': 'cerrarSesion'}, function(data){
+                location.href ="../index.php";
+            });
+	    }//cerrarSesion
 	</script>
 	<!-- //Owl-Carousel-JavaScript -->  
 
