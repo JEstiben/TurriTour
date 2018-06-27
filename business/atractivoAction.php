@@ -8,8 +8,7 @@ if (isset($_POST['crearAtractivo'])) {
         $imagen = $_FILES["imagen"]["name"];
         $ruta = $_FILES["imagen"]["tmp_name"];
         $nombre = str_replace(".jpg", "", $imagen);
-        $nuevoNombre = str_replace(" ", "", $_POST['atractivo']);
-        $nuevoNombre = limpiarNombre($nuevoNombre);
+        $nuevoNombre = limpiarNombre($nombre);
         $imagen = str_replace($nombre, $nuevoNombre, $imagen);
         $destino="../images/atractivos/".$imagen;
         $atractivo = new atractivo(0, $_POST['atractivo'], $_POST['descripcion'], $imagen, $_POST['video'], $_POST['longitud'], $_POST['latitud'], $_POST['tipo_camino']);
@@ -38,8 +37,7 @@ if (isset($_POST['crearAtractivo'])) {
         $imagen = $_FILES["imagen"]["name"];
         $ruta = $_FILES["imagen"]["tmp_name"];
         $nombre = str_replace(".jpg", "", $imagen);
-        $nuevoNombre = str_replace(" ", "", $_POST['atractivo']);
-        $nuevoNombre = limpiarNombre($nuevoNombre);
+        $nuevoNombre = limpiarNombre($nombre);
         $imagen = str_replace($nombre, $nuevoNombre, $imagen);
         $destino="../images/atractivos/".$imagen;
         $atractivo = new atractivo($_POST["idAtractivo"], $_POST['atractivo'], $_POST['descripcion'], $imagen, $_POST['video'], $_POST['longitud'], $_POST['latitud'], $_POST['tipo_camino']);
