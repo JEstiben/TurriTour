@@ -32,6 +32,28 @@ if (isset($_POST['crearAtractivo'])) {
     }else{
         echo "false";
     }//if-else
+}else if (isset($_POST['modificarAtractivo'])) {
+    $tipo = $_FILES["imagen"]["type"];
+    if($tipo == "image/jpeg"){
+        $imagen = $_FILES["imagen"]["name"];
+        $ruta = $_FILES["imagen"]["tmp_name"];
+        $nombre = str_replace(".jpg", "", $imagen);
+        $nuevoNombre = str_replace(" ", "", $_POST['atractivo']);
+        $nuevoNombre = limpiarNombre($nuevoNombre);
+        $imagen = str_replace($nombre, $nuevoNombre, $imagen);
+        $destino="../images/atractivos/".$imagen;
+        $atractivo = new atractivo($_POST["idAtractivo"], $_POST['atractivo'], $_POST['descripcion'], $imagen, $_POST['video'], $_POST['longitud'], $_POST['latitud'], $_POST['tipo_camino']);
+        $atractivoBusiness = new atractivoBusiness();
+        $resultado = $atractivoBusiness->modificarAtractivo($atractivo);
+        if($resultado == "true"){
+            copy($ruta,$destino);
+            echo "true";
+        }else{
+            echo "false";
+        }//if-else
+    }else{
+        echo "error";
+    }//if tipo archivo
 }//if-else
 
 function limpiarNombre($nombreNuevo)
