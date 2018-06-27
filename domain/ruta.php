@@ -21,7 +21,7 @@ class ruta{
 	public function getIdRuta(){
 		return $this->IdRuta;
 	}
-	public function set($IdRuta){
+	public function setIdRuta($IdRuta){
 		$this->IdRuta = $IdRuta;
 	}
 
