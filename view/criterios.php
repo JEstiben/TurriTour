@@ -1,5 +1,6 @@
 <?php
 include '../public/header.php';
+include '../business/atractivoBusiness.php';
 ?>
 <!--Scripts para hacer uso de máscaras-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -7,6 +8,22 @@ include '../public/header.php';
 
 <script src="jquery.min.js" type="text/javascript"></script>
 <script src="./jquery-3.2.1.js"></script>
+
+<!--Obtención de los atractivos-->
+	<?php
+		$atractivoB = new atractivoBusiness();
+		
+		//Datos de atractivos que se van a necesitar para generar las rutas en el script
+		$atractivos = $atractivoB->obtenerAtractivo();
+		$cadenaAtractivos = "";
+		foreach ($atractivos as $atractivoActual) {
+			$cadenaAtractivos .= $atractivoActual->getIdAtractivo().'-'.
+								 $atractivoActual->getNombreAtractivo().'-'.
+								 $atractivoActual->getTipoCaminoAtractivo().';';
+		}
+
+	?>
+<!--Obtención de los atractivos-->
 
 
 <!-- Contenido -->
@@ -28,13 +45,13 @@ include '../public/header.php';
 							<label>Ingrese la distancia mínima del recorrido:</label>
 							<br><br><br>
 							<label>Ingrese la cantidad de tiempo que desea que desea durar durante el viaje:</label>							
-							<br>
+							<br><br><br>
+							<label>Seleccione el tipo de camino que desea transitar:</label>							
 							<a href="obtenerRuta.php">
 								<input type="button" value="Ver Rutas" name="rutas" id="rutas" class="btn btn-accept" src="obtenerRutaADM.php" />
 							</a>
 					</div>					
 					<div class="col-md-6" style="text-align: center;">
-						<input class="form-control" type="text" name="datos" id="datos" >
 						<input class="form-control" type="text" name="distancia" id="distacia" placeholder="01.0KM">
 						<script type="text/javascript">
     						$("#distacia").mask("00.0KM");
@@ -44,6 +61,17 @@ include '../public/header.php';
 						<script type="text/javascript">
     						$("#tiempo").mask("00:00Hrs");
     					</script>
+    					<br>	
+    					<select id="terreno" name="terreno" class="form-control">
+    					<?php
+    						//Manejo de los tipos de terreno y mostrarlos en la vista
+    						$terrenos = $atractivoB->obtenerTiposTerreno();
+    						foreach ($terrenos as $terrenoActual) {
+    							echo '<option  value='.$terrenoActual.'>'.$terrenoActual.'</option>';
+    						}
+    					?>
+    					</select>
+
     					<a href="obtenerAtractivo.php">
 						<input type="button" value="Ver Atracivos" name="atractivos" id="atractivos" class="btn btn-accept"/>
 						</a>
@@ -70,7 +98,7 @@ include '../public/footer.php';
         infoWindow = new google.maps.InfoWindow;
         geocoder = new google.maps.Geocoder;
 
-        // Try HTML5 geolocation.
+        // Aquí se obtiene la ubicación del usuario
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
@@ -84,8 +112,9 @@ include '../public/footer.php';
 
           });
       }
-  }
+  }//init map
 
+  		//método que se encarga de mostrar la ubicación del usuario en el mapa
       function geocodeLatLng(geocoder, map, infowindow, latitudString) {
         var latlngStr = latitudString.split(',', 2);
         var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
@@ -98,7 +127,7 @@ include '../public/footer.php';
                 map: map
               });
               map.setCenter(marker.position);
-              infowindow.setContent(results[0].formatted_address);
+              infowindow.setContent('Usted está aquí: '+results[0].formatted_address);
               infowindow.open(map, marker);
               ubicacion = results[0].formatted_address;//******************************************UBICACIÓN DEL USUARIO
               document.getElementById('datos').value = ubicacion;
@@ -109,15 +138,8 @@ include '../public/footer.php';
             window.alert('Falla en el geolocalizador de Google: ' + status);
           }
         });
-      }
+      }//geocodeLatLng
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-      }
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1JuYmoq83Om5mLz0qyg_k1viClteC2NU&callback=initMap">

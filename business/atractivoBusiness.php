@@ -25,6 +25,11 @@ class atractivoBusiness {
     public function eliminarAtractivo($idAtractivo) {
         return $this->atractivoData->eliminarAtractivo($idAtractivo);
     }//eliminarAtractivo
+
+    public function obtenerTiposTerreno(){
+        return $this->atractivoData->obtenerTiposTerreno();
+    }//obtenerTiposTerreno
+
 }//class
 
 ?>
