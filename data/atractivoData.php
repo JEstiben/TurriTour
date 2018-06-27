@@ -37,30 +37,6 @@ class atractivoData extends Data {
 
     }//crear Atractivo
 
-    public function modificarAtractivo($atractivo) {
-
-        $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
-        $conn->set_charset('utf8');
-
-        $queryUpdate = "UPDATE tb_atractivo SET nombre_atractivo = '".$atractivo->getNombreAtractivo().
-        "', descripcion_atractivo = '".$atractivo->getDescripcionAtractivo().
-        "', imagen_atractivo = '".$atractivo->getImagenAtractivo().
-        "', video_atractivo = '".$atractivo->getVideoAtractivo().
-        "', latitud_atractivo = '".$atractivo->getLatitudAtractivo().
-        "', longitud_atractivo = '".$atractivo->getLongitudAtractivo().
-        "', tipo_camino_atractivo = '".$atractivo->getTipoCaminoAtractivo()."' Where id_atractivo = '".$atractivo->getIdAtractivo()."';";
-
-        $resultado = mysqli_query($conn, $queryUpdate);
-        mysqli_close($conn);
-
-        if($resultado){
-            return ("true");
-        }else{
-            return ("false");
-        }//if-else
-
-    }//modificarAtractivo
-
     public function obtenerAtractivo() {
 
         $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
