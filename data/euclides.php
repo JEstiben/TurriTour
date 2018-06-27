@@ -23,7 +23,7 @@ function euclides($datosUsuario, $registrosBaseDatos, $atributos) {
             $ruta[] = $registroActual;
         }//if similitud minima
     }//for Base de datos
-    //Se retorna el dato obtenido
+    //Se retorna el dato obtenido 
     return $ruta;
 }//euclides
 
