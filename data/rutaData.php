@@ -4,7 +4,7 @@ include_once 'data.php';
 include '../domain/ruta.php';
 
 class rutaData extends Data {
-    
+
     public function registrarRuta($ruta) {
 
         $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
@@ -18,7 +18,7 @@ class rutaData extends Data {
             $id_ruta = $row[0];
         }//end while
 
-        $queryInsert = "INSERT INTO tb_atractivo VALUES (" . $id_ruta . ", " .
+        $queryInsert = "INSERT INTO tb_ruta VALUES (" . $id_ruta . ", " .
         "".$ruta->getIdRuta()."". "," .
         "'".$ruta->getDistancia()."'". "," .
         "'".$ruta->getTiempo()."'". "," .
