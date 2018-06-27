@@ -1,7 +1,7 @@
 <?php
 
 include_once 'data.php';
-include '../domain/atractivo/atractivo.php';
+include '../domain/atractivo.php';
 
 class atractivoData extends Data {
     public function crearAtractivo($atractivo) {

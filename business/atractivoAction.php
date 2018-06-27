@@ -11,7 +11,7 @@ if (isset($_POST['crearAtractivo'])) {
         $nuevoNombre = str_replace(" ", "", $_POST['atractivo']);
         $nuevoNombre = limpiarNombre($nuevoNombre);
         $imagen = str_replace($nombre, $nuevoNombre, $imagen);
-        $destino="../../images/atractivos/".$imagen;
+        $destino="../images/atractivos/".$imagen;
         $atractivo = new atractivo(0, $_POST['atractivo'], $_POST['descripcion'], $imagen, $_POST['video'], $_POST['longitud'], $_POST['latitud'], $_POST['tipo_camino']);
         $atractivoBusiness = new atractivoBusiness();
 		$resultado = $atractivoBusiness->crearAtractivo($atractivo);

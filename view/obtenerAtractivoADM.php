@@ -3,7 +3,7 @@ include '../public/header.php';
 ?>
 
 <?php
-    include '../business/atractivoBusiness/atractivoBusiness.php';
+    include '../business/atractivoBusiness.php';
 
     $atractivoBusiness = new atractivoBusiness();
     $atractivos = $atractivoBusiness->obtenerAtractivo();

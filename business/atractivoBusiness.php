@@ -1,6 +1,6 @@
 <?php
 
-include_once '../data/atractivoData/atractivoData.php';
+include_once '../data/atractivoData.php';
 
 class atractivoBusiness {
 
