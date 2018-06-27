@@ -14,6 +14,8 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-1.11.0.min.js"></script>
 <script src="../js/alertify.min.js"></script>
+<script src="jquery.min.js" type="text/javascript"></script>
+<script src="./jquery-3.2.1.js"></script>
 <!-- css files -->
 <link rel="stylesheet" href="../css/bootstrap.css"> <!-- Bootstrap-Core-CSS -->
 <link rel="stylesheet" href="../css/animations.css"> <!-- Animations -->

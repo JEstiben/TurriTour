@@ -5,6 +5,9 @@ include '../public/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
+<script src="jquery.min.js" type="text/javascript"></script>
+<script src="./jquery-3.2.1.js"></script>
+
 
 <!-- Contenido -->
 <div class="about">
@@ -78,7 +81,7 @@ include '../public/footer.php';
             geocodeLatLng(geocoder, map, infoWindow, latitudString);
 
             //
-            
+
           });
       }
   }
