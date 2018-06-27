@@ -37,6 +37,27 @@ class atractivoData extends Data {
 
     }//crear Atractivo
 
+//
+
+    public function obtenerTiposTerreno() {
+
+        $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
+        $conn->set_charset('utf8');
+
+        $querySelect = "SELECT DISTINCT tipo_camino_atractivo FROM tb_atractivo";
+        $resultado = mysqli_query($conn, $querySelect);
+        mysqli_close($conn);
+        $terreno = [];
+
+        while ($row = mysqli_fetch_array($resultado)) {
+            //tipo_camino_atractivo
+            $terrenoActual = $row['tipo_camino_atractivo'];
+            array_push($terreno, $terrenoActual);
+        }//end while
+
+        return $terreno;
+    }//obtenerTipos de Camino
+
     public function obtenerAtractivo() {
 
         $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
