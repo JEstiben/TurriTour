@@ -106,19 +106,18 @@ class rutaData extends Data {
         return $atrativo;
     }//obteneratractivo
 
-    public function obtenerAtractivoId($idAtractivo) {
+    public function obtenerRutaId($idRuta) {
 
         $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
         $conn->set_charset('utf8');
 
-        $querySelect = "SELECT * FROM tb_atractivo Where id_atractivo = '".$idAtractivo."';";
+        $querySelect = "SELECT * FROM tb_ruta_euclides Where id_ruta = '".$idRuta."';";
         $resultado = mysqli_query($conn, $querySelect);
         mysqli_close($conn);
 
         while ($row = mysqli_fetch_array($resultado)) {
-            $atractivo = new atractivo($row['id_atractivo'], $row['nombre_atractivo'], $row['descripcion_atractivo'],
-            $row['imagen_atractivo'],$row['video_atractivo'], $row['longitud_atractivo'], $row['latitud_atractivo'],
-            $row['tipo_camino_atractivo']);
+            $atractivo = new ruta($row['id_ruta'], $row['punto_partida_ruta'], $row['punto_llegada_ruta'],
+            $row['duracion_ruta'],$row['distancia_ruta'], $row['tipo_camino_atractivo']);
         }//end while
 
         return $atractivo;
