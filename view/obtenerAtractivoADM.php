@@ -80,7 +80,7 @@ include '../public/footer.php';
                 mostrarMensaje("error", "Error al eliminar el atractivo.");
             }//if-else
         });
-    }//guardar
+    }//eliminar
 
     function mostrarMensaje(estado,mensaje){
         if(estado === "success"){

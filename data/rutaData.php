@@ -50,8 +50,7 @@ class rutaData extends Data {
             $id_ruta = $row[0];
         }//end while
 
-        $queryInsert = "INSERT INTO tb_ruta_euclides VALUES (" . $id_ruta . ", " .
-        "".$ruta->getIdRuta()."". "," .
+        $queryInsert = "INSERT INTO tb_ruta_euclides VALUES ('".$ruta->getIdRuta()."', " .
         "'".$ruta->getDistancia()."'". "," .
         "'".$ruta->getTiempo()."'". "," .
         "'".$ruta->getPuntoInicial()."'". "," .

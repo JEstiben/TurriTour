@@ -44,7 +44,7 @@ class recomendacionesData extends Data {
     }//recomendaciones
 
     public function tipoCamino($tipoCamino){
-        switch ($tipo) {
+        switch ($tipoCamino) {
             case 'Asfalto':
                 return 1;
             case 'Piedra':
