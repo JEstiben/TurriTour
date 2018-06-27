@@ -7,7 +7,7 @@ include '../public/header.php';
 	<li><a href="detalleRuta.php">Detalles</a></li>
 	<li class="active">Visualizar Ruta</li>
 </ol>
-<!-- Contenido -->
+<!-- Contenido de la pus -->
 <div class="about">
 	<div class="container">
 		<div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em;">
