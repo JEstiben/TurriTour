@@ -6,13 +6,23 @@ include '../public/header.php';
 	<li><a href="obtenerRuta.php">Recomendaciones</a></li>
 	<li class="active">Detalles</li>
 </ol>
+
+<?php
+    include '../business/rutaBusiness.php';
+    
+    $rutaBusiness = new rutaBusiness();
+    $ruta = $rutaBusiness->obtenerRutaId($_GET["id"]);
+?>
+
 <!-- Contenido -->
 <div class="about">
 	<div class="container">
 		<div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em;">
 			<div class="col-md-offset-1 col-md-10">
 				<div class="col-md-12" style="text-align: center;">
-					<h2>Ruta 2</h2>
+					<?php
+            echo '<h2>Ruta '.$ruta->getIdRuta().'</h2>';
+          ?>
 				</div>
 				<div class="col-md-12">
 					
@@ -25,17 +35,29 @@ include '../public/header.php';
 
                 	<div class="col-md-offset-2 col-md-4" style="text-align: center;">
 						<h2> Distancia:</h2>
-						<br>
+            <?php
+                echo '<h2>'.$ruta->getDistancia().' KM</h2>';
+            ?>
 						<h2>Duraci&oacute;n:</h2>
-						<br>
-						<h2>Destino: 
-							<a href="detallesAtractivo.php?">Monumento Guayabo</a>
+						<?php
+                echo '<h2>'.$ruta->getTiempo().' Hrs</h2>';
+            ?>
+            <h2>Destino: 
+							<?php
+                echo '<a href="detalleAtractivo.php?id='.$ruta->getIdRuta().'&origen=1">'.$ruta->getPuntoFinal().'</a>';
+              ?>
 						</h2>						
 						<div class="col-md-12" style="text-align: center;">
 							<form id="form" method="POST" enctype="multipart/form-data" action="AtractivosCercanos.php">
 								<a href="detalleRuta.php">
-									<img style="max-width: 100%; margin: 0.5em auto;" src="../images/ruta1.png">
+                  <?php
+                    echo '<img style="max-width: 100%; margin: 0.5em auto;" src="../images/ruta'.$ruta->getIdRuta().'.png">';
+                  ?>
 								</a>
+                <?php
+                  echo '<input type="hidden" name="origen" id="origen" value="'.$ruta->getPuntoInicial().'" />';
+                  echo '<input type="hidden" name="destino" id="destino" value="'.$ruta->getPuntoFinal().'" />';
+                ?>
 							</form>
 						</div>
 						
@@ -65,24 +87,14 @@ include '../public/footer.php';
         });
         directionsDisplay.setMap(map);
 
-        document.getElementById('submit').addEventListener('click', function() {
-          calculateAndDisplayRoute(directionsService, directionsDisplay);
-        });
+        calculateAndDisplayRoute(directionsService, directionsDisplay);
     }
 
 	function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         var waypts = [];
-            waypts.push({
-              location: "Universidad de Costa Rica, Sede del Atlántico, Provincia de Cartago, Turrialba",
-              stopover: true
-            });
-            waypts.push({
-              location: "Parque Quesada Casal, Calle 1, Provincia de Cartago, Turrialba",
-              stopover: true
-            });
         directionsService.route({
-          origin: "Turrialba, Provincia de Cartago",
-          destination: "Monumento Nacional Guayabo, Provincia de Cartago, Turrialba",
+          origin: document.getElementById('origen').value,
+          destination: document.getElementById('destino').value,
           waypoints: waypts,
           optimizeWaypoints: true,
           travelMode: 'DRIVING'
