@@ -1,6 +1,14 @@
 <?php
 include '../public/header.php';
 ?>
+
+<?php
+    include '../business/atractivoBusiness/atractivoBusiness.php';
+
+    $atractivoBusiness = new atractivoBusiness();
+    $atractivo = $atractivoBusiness->obtenerAtractivoId($_POST["idAtractivo"]);
+?>
+
 <!-- Contenido -->
 <div class="about">
 	<div class="container">
@@ -19,7 +27,9 @@ include '../public/header.php';
 				<div class="col-md-12" style="text-align: center;">
 					<div class="col-md-3" style="text-align: center;">
 							<label>Atractivo</label>
-							<input class="form-control" type="text" name="lugar" id="lugar" disabled>
+							<?php
+                                echo '<input class="form-control" type="text" name="lugar" id="lugar" value="'.$atractivo->getNombreAtractivo().'" disabled>';
+                            ?>
 							<label>Latitud</label>
 							<input class="form-control" type="text" name="lat" id="lat" disabled>
 							<label>Longitud</label>
@@ -28,7 +38,7 @@ include '../public/header.php';
 					<div class="col-md-offset-1 col-md-4" style="text-align: center;">
 						<label>Tipo Camino</label>
                         <select id="tipo_camino" name="tipo_camino" class="form-control">
-                            <option value="Asfalto">Asfalto</option>
+                            <option selected="true" value="Asfalto">Asfalto</option>
                             <option value="Piedra">Piedra</option>
                             <option value="Tierra">Tierra</option>
                         </select>
