@@ -9,9 +9,13 @@ include '../public/header.php';
 
 <?php
     include '../business/rutaBusiness.php';
+    include '../business/atractivoBusiness.php';
     
     $rutaBusiness = new rutaBusiness();
     $ruta = $rutaBusiness->obtenerRutaId($_GET["id"]);
+
+    $atractivoBusiness = new atractivoBusiness();
+    $atrac = $atractivoBusiness->obtenerAtractivoespe($ruta->getTipoCamino());
 ?>
 
 <!-- Contenido -->
@@ -50,10 +54,12 @@ include '../public/header.php';
 					</div>
           <div class="col-md-12" style="text-align: center;">
               <?php
-                    echo '<img style="max-width: 15%; margin: 0.5em auto;" src="../images/ruta'.$ruta->getIdRuta().'.png" data-toggle="modal" data-target="#myModal">';
-                
-                  echo '<input type="hidden" name="origen" id="origen" value="'.$ruta->getPuntoInicial().'" />';
-                  echo '<input type="hidden" name="destino" id="destino" value="'.$ruta->getPuntoFinal().'" />';
+              echo '<h1>Atractivos de interés</h1>';
+                foreach ($atrac as $value) {
+                   echo '<a href="detalleAtractivo.php?id='.$value->getIdAtractivo().'">       <img style="max-width: 15%; margin: 0.5em auto;" src="../images/atractivos/'.$value->getImagenAtractivo().'">                                          </a>';  
+                }        
+                echo '<input type="hidden" name="origen" id="origen" value="'.$ruta->getPuntoInicial().'" />';
+                echo '<input type="hidden" name="destino" id="destino" value="'.$ruta->getPuntoFinal().'" />';
                 ?>
             </div>
 				</div>

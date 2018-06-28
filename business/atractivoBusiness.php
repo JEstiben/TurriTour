@@ -22,6 +22,10 @@ class atractivoBusiness {
         return $this->atractivoData->obtenerAtractivo();
     }//obteneratractivo
 
+    public function obtenerAtractivoespe($tipo) {
+        return $this->atractivoData->obtenerAtractivoespe($tipo);
+    }//obtenerAtractivoespe
+
     public function obtenerAtractivoId($idAtractivo) {
         return $this->atractivoData->obtenerAtractivoId($idAtractivo);
     }//obteneratractivoId
