@@ -74,7 +74,7 @@ include '../business/atractivoBusiness.php';
     					</select>
 
     					<a href="obtenerAtractivo.php">
-						<input type="button" value="Ver Atracivos" name="atractivos" id="atractivos" class="btn btn-accept"/>
+						<input type="submit" value="Ver Atracivos" id="atractivos" class="btn btn-accept"/>
 						</a>
 						<br><br><br><br>
 					</div>
@@ -92,37 +92,41 @@ include '../public/footer.php';
       
       var map, infoWindow, geocoder;
       function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 15
-        });
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: -34.397, lng: 150.644},
+              zoom: 15
+            });
 
-        var directionsService = new google.maps.DirectionsService;
-      	var directionsDisplay = new google.maps.DirectionsRenderer;
-        infoWindow = new google.maps.InfoWindow;
-        geocoder = new google.maps.Geocoder;
+            var directionsService = new google.maps.DirectionsService;
+          	var directionsDisplay = new google.maps.DirectionsRenderer;
+            infoWindow = new google.maps.InfoWindow;
+            geocoder = new google.maps.Geocoder;
 
 
 
-        // Aquí se obtiene la ubicación del usuario
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            var latitudString = pos.lat + "," + pos.lng;
-            geocodeLatLng(geocoder, map, infoWindow, latitudString);
+            // Aquí se obtiene la ubicación del usuario
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+                };
+                var latitudString = pos.lat + "," + pos.lng;
+                geocodeLatLng(geocoder, map, infoWindow, latitudString);
 
-            //
-            directionsDisplay.setMap(map);
-            document.getElementById('rutas').addEventListener('click', function() {
-          llamadoCalcular(directionsService, directionsDisplay);
-        });
-
-          });
-      }
-  }//init map
+                //
+                directionsDisplay.setMap(map);
+                document.getElementById('rutas').addEventListener('click', function() {
+                  llamadoCalcular(directionsService, directionsDisplay);
+                  recomendacionesEuclides();
+                });
+                document.getElementById('atracivos').addEventListener('click', function() {
+                  llamadoCalcular(directionsService, directionsDisplay);
+                  recomendacionesBayes();
+                });
+              });
+          }
+      }//init map
 
   		//método que se encarga de mostrar la ubicación del usuario en el mapa
       function geocodeLatLng(geocoder, map, infowindow, latitudString) {
@@ -173,9 +177,8 @@ include '../public/footer.php';
       		
 
       	}//for que recorre todos los atractivos
-        recomendacionesEuclides();
       	//alert("Finichin");
-      }
+      }//llamadoCalcular
 
       //función encargada de calcular las distancias y los tiempos y mandarlos a guardar
       function calculateAndDisplayRoute(directionsService, directionsDisplay, atractivoActual) {
@@ -199,7 +202,7 @@ include '../public/footer.php';
               distanciaRuta = route.legs[i].distance.value;//esto viene en metros se tiene que dividir entre 1000 para tener los kms
               tiempoRuta = route.legs[i].duration.value;//esto viene en minutos y se tiene que dividr entre 60 para obtener las horas
               //sleep(2000);
-              alert("Id: "+atractivoActual[0] + "*** Nombre: "+atractivoActual[1] +" ***Ubicacion: "+ubicacion+ " ***Distancia: "+distanciaRuta + " ***Tiempo: "+ tiempoRuta);
+              //alert("Id: "+atractivoActual[0] + "*** Nombre: "+atractivoActual[1] +" ***Ubicacion: "+ubicacion+ " ***Distancia: "+distanciaRuta + " ***Tiempo: "+ tiempoRuta);
               //enviar a insertar.
 
               tiempoRuta = tiempoRuta/60;
@@ -216,7 +219,7 @@ include '../public/footer.php';
             };
 
             $.post("../business/rutaAction.php",rutaEuclides, function(data){ 
-            	alert(data);
+            	//alert(data);
             });
 
             }//for
@@ -244,21 +247,38 @@ include '../public/footer.php';
       }//sleep
 
       function recomendacionesEuclides() {
-      var parameters = {
-          "recomendaciones" : 'recomendaciones',
-          "distancia" : document.getElementById('distacia').value,
-          "duracion" : document.getElementById('tiempo').value,
-          "tipoCamino" : document.getElementById('terreno').value
-      };
+        var parameters = {
+            "recomendacionesEuclides" : 'recomendacionesEuclides',
+            "distancia" : document.getElementById('distacia').value,
+            "duracion" : document.getElementById('tiempo').value,
+            "tipoCamino" : document.getElementById('terreno').value
+        };
 
-      $.post("../business/recomendacionesAction.php",parameters, function(data){
-        if(data == "true"){
-          location.href = "obtenerRuta.php";
-        }else if(data == "false"){
-          mostrarMensaje("error", "No se encontraron rutas.");
-        }//if-else
-      });
-    }//recomendaciones
+        $.post("../business/recomendacionesAction.php",parameters, function(data){
+          if(data == "true"){
+            location.href = "obtenerRuta.php";
+          }else if(data == "false"){
+            mostrarMensaje("error", "No se encontraron rutas.");
+          }//if-else
+        });
+      }//recomendacionesEuclides
+
+      function recomendacionesBayes() {
+        var parameters = {
+            "recomendacionesBayes" : 'recomendacionesBayes',
+            "distancia" : document.getElementById('distacia').value,
+            "duracion" : document.getElementById('tiempo').value,
+            "tipoCamino" : document.getElementById('terreno').value
+        };
+
+        $.post("../business/recomendacionesAction.php",parameters, function(data){
+          if(data == "true"){
+            location.href = "obtenerAtractivo.php";
+          }else if(data == "false"){
+            mostrarMensaje("error", "No se encontraron atractivos.");
+          }//if-else
+        });
+      }//recomendacionesBayes
 
     function mostrarMensaje(estado,mensaje){
         if(estado === "success"){
