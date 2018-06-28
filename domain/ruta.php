@@ -32,13 +32,6 @@
 			$this->PuntoInicial = $PuntoInicial;
 		}
 
-		public function getPuntoFinal(){
-			return $this->PuntoFinal;
-		}
-		public function setPuntoFinal($PuntoFinal){
-			$this->PuntoFinal = $PuntoFinal;
-		}
-
 		public function getTiempo(){
 			return $this->Tiempo;
 		}
