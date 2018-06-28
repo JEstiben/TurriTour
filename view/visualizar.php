@@ -87,6 +87,6 @@ include '../public/footer.php';
             window.alert('Directions request failed due to ' + status);
           }
         });
-      }
+      }//calculateAndDisplayRoute
 
 </script>
