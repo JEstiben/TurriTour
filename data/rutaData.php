@@ -18,8 +18,8 @@ class rutaData extends Data {
             $id_ruta = $row[0];
         }//end while
 
-        $queryInsert = "INSERT INTO tb_ruta VALUES (" . $id_ruta . ", " .
-        "".$ruta->getIdRuta()."". "," .
+        $queryInsert = "INSERT INTO tb_ruta VALUES ("
+        .$ruta->getIdRuta()."". "," .
         "'".$ruta->getDistancia()."'". "," .
         "'".$ruta->getTiempo()."'". "," .
         "'".$ruta->getPuntoInicial()."'". "," .
@@ -29,11 +29,12 @@ class rutaData extends Data {
         $resultado = mysqli_query($conn, $queryInsert);
         mysqli_close($conn);
 
-        if($resultado){
+        /*if($resultado){
             return ("true");
         }else{
             return ("false");
-        }//if-else
+        }//if-else*/
+        return $queryInsert;
 
     }//crear Atractivo
 
