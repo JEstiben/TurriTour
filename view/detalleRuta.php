@@ -26,7 +26,7 @@ include '../public/header.php';
 				</div>
 				<div class="col-md-12">
 					
-					<div class="col-md-offset-1 col-md-5">
+				<div class="col-md-offset-1 col-md-5">
 						<h1>
                     		<div id="map"></div>
                     		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1JuYmoq83Om5mLz0qyg_k1viClteC2NU&callback=initMap"></script>
@@ -44,24 +44,18 @@ include '../public/header.php';
             ?>
             <h2>Destino: 
 							<?php
-                echo '<a href="detalleAtractivo.php?id='.$ruta->getIdRuta().'&origen=1">'.$ruta->getPuntoFinal().'</a>';
+                echo '<a href="detalleAtractivo.php?id='.$ruta->getIdRuta().'&origen=1">'.$ruta->getPuntoFinal().' </a>';
               ?>
 						</h2>						
-						<div class="col-md-12" style="text-align: center;">
-							<form id="form" method="POST" enctype="multipart/form-data" action="AtractivosCercanos.php">
-								<a href="detalleRuta.php">
-                  <?php
-                    echo '<img style="max-width: 100%; margin: 0.5em auto;" src="../images/ruta'.$ruta->getIdRuta().'.png">';
-                  ?>
-								</a>
-                <?php
+					</div>
+          <div class="col-md-12" style="text-align: center;">
+              <?php
+                    echo '<img style="max-width: 15%; margin: 0.5em auto;" src="../images/ruta'.$ruta->getIdRuta().'.png" data-toggle="modal" data-target="#myModal">';
+                
                   echo '<input type="hidden" name="origen" id="origen" value="'.$ruta->getPuntoInicial().'" />';
                   echo '<input type="hidden" name="destino" id="destino" value="'.$ruta->getPuntoFinal().'" />';
                 ?>
-							</form>
-						</div>
-						
-					</div>
+            </div>
 				</div>
 			</div>
 				
