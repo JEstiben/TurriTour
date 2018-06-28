@@ -213,7 +213,9 @@ include '../public/footer.php';
                 "tipocamino" : atractivoActual[2]
             };
 
-            $.post("../business/rutaAction.php",rutaEuclides, function(data){ });
+            $.post("../business/rutaAction.php",rutaEuclides, function(data){ 
+            	alert(data);
+            });
 
             }
           } else {

@@ -35,7 +35,7 @@ class ruta{
 	public function getPuntoFinal(){
 		return $this->PuntoFinal;
 	}
-	public function setPuntoFinal($){
+	public function setPuntoFinal($PuntoFinal){
 		$this->PuntoFinal = $PuntoFinal;
 	}
 

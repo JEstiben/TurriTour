@@ -4,18 +4,19 @@ include 'rutaBusiness.php';
 
 if (isset($_POST['crearRuta'])) {
 
-	    $rutaTemp = new atractivo($_POST['id'], $_POST['puntoinicial'], $_POST['puntofinal'], $_POST['tiempo'], $_POST['distancia'], $_POST['tipocamino']);
-
+	    $rutaTemp = new ruta($_POST['id'], $_POST['puntoinicial'], $_POST['puntofinal'], $_POST['tiempo'], $_POST['distancia'], $_POST['tipocamino']);
+        
         $rutaBusiness = new rutaBusiness();
 		$resultado = $rutaBusiness->registrarRuta($rutaTemp);
-		if($resultado == "true"){
+		echo $resultado;
+        /*if($resultado == "true"){
 			echo "true";
         }else{
             echo "false";
-        }//if-else
-    }//if crearRuta
+        }//if-else*/
 
-}else if (isset($_POST['eliminarAtractivo'])) {
+    }//if crearRuta
+    else if (isset($_POST['eliminarAtractivo'])) {
     $atractivoBusiness = new atractivoBusiness();
     $resultado = $atractivoBusiness->eliminarAtractivo($_POST['idAtractivo']);
     if($resultado == "true"){
