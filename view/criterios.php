@@ -191,7 +191,7 @@ include '../public/footer.php';
         }, function(response, status) {
         	//alert("Id: "+atractivoActual[0] + "*** Nombre: "+atractivoActual[1] +" ***Ubicacion: "+ubicacion);
           if (status === 'OK') {
-            directionsDisplay.setDirections(response);
+            //directionsDisplay.setDirections(response);
             var route = response.routes[0];
 
             // For each route, display summary information.

@@ -74,7 +74,7 @@ class rutaData extends Data {
         $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
         $conn->set_charset('utf8');
 
-        $querySelect = "SELECT id_ruta,distancia_ruta,duracion_ruta,punto_partida_ruta,punto_llegada_ruta,tipo_camino_atractivo FROM tb_ruta_euclides ORDER BY id_ruta ASC LIMIT 5;";
+        $querySelect = "SELECT id_ruta,distancia_ruta,duracion_ruta,punto_partida_ruta,punto_llegada_ruta,tipo_camino_atractivo FROM tb_ruta_euclides ORDER BY id_ruta DESC LIMIT 5;";
         $resultado = mysqli_query($conn, $querySelect);
         mysqli_close($conn);
         $rutas = [];
