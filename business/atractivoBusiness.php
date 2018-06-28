@@ -14,6 +14,10 @@ class atractivoBusiness {
         return $this->atractivoData->crearAtractivo($atractivo);
     }//crear Atractivo
 
+    public function modificarAtractivo($atractivo) {
+        return $this->atractivoData->modificarAtractivo($atractivo);
+    }//modificar Atractivo
+
     public function obtenerAtractivo() {
         return $this->atractivoData->obtenerAtractivo();
     }//obteneratractivo

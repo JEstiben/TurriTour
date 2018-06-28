@@ -4,6 +4,12 @@ include '../public/header.php';
 <!-- Contenido -->
 <div class="about">
 	<div class="container">
+        <?php
+            if(session_status() != 2){
+                session_start();
+            }
+            if(isset($_SESSION['Usuario'])){
+        ?>
 		<div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em;">
 			<div class="col-md-offset-1 col-md-10">
 				<form method="post" id="formulario" enctype="multipart/form-data">
@@ -51,6 +57,22 @@ include '../public/header.php';
 				</form>
 			</div>
 		</div>
+        <?php
+            }else{
+        ?>
+        <div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em;">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="col-md-offset-3 col-md-6" style="text-align: center;">
+                    <img style="max-width: 60%;" src="../images/error.png">
+                </div>
+                <div class="col-md-12" style="text-align: center;">
+                    <h2>Error al cargar la p&aacute;gina.</h2>
+                </div>
+            </div>
+        </div>
+        <?php
+            }
+        ?>
 	</div>
 </div>
 <!-- Contenido -->
@@ -93,28 +115,53 @@ include '../public/footer.php';
     }
 
     function guardar() {
-      	var formData = new FormData(document.getElementById("formulario"));
-      	formData.append("crearAtractivo", "crearAtractivo");
-      	formData.append("latitud", document.getElementById("latitud").value);
-      	formData.append("longitud", document.getElementById("longitud").value);
-      	$.ajax({
-		    url: '../business/atractivoAction.php',
-            type: "POST",
-		    dataType: "html",
-		    data: formData,
-		    cache: false,
-		    contentType: false,
-		    processData: false
-		})
-	    .done(function(data){
-	    	if(data == "true"){
-                mostrarMensaje("success", "Éxito al crear el atractivo.");
-            }else if(data == "false"){
-                mostrarMensaje("error", "Error al crear el atractivo.");
-            }else if(data == "error"){
-                mostrarMensaje("error", "El formato de la imagen es incorrecto.");
+        var latitud = document.getElementById("latitud").value;
+        var longitud = document.getElementById("longitud").value;
+
+        if (latitud != "" && longitud != ""){
+            var imagen = document.getElementById("imagen").value;
+
+            if(imagen != ""){
+                var video = document.getElementById("video").value;
+
+                if(video != ""){
+                    var descripcion = document.getElementById("descripcion").value;
+
+                    if(descripcion != ""){
+                        var formData = new FormData(document.getElementById("formulario"));
+                        formData.append("crearAtractivo", "crearAtractivo");
+                        formData.append("latitud", document.getElementById("latitud").value);
+                        formData.append("longitud", document.getElementById("longitud").value);
+                        $.ajax({
+                            url: '../business/atractivoAction.php',
+                            type: "POST",
+                            dataType: "html",
+                            data: formData,
+                            cache: false,
+                            contentType: false,
+                            processData: false
+                        })
+                        .done(function(data){
+                            if(data == "true"){
+                                mostrarMensaje("success", "Éxito al crear el atractivo.");
+                            }else if(data == "false"){
+                                mostrarMensaje("error", "Error al crear el atractivo.");
+                            }else if(data == "error"){
+                                mostrarMensaje("error", "El formato de la imagen es incorrecto.");
+                            }//if-else
+                        });
+                    }else{
+                        mostrarMensaje("error", "Debe agregar una descripcion para el atractivo.");
+                    }//if-else
+                }else{
+                    mostrarMensaje("error", "Debe agregar una dirección para el video del atractivo.");
+                }//if-else
+            }else{
+                mostrarMensaje("error", "Debe cargar una imagen.");
             }//if-else
-	    });
+        }else{
+            mostrarMensaje("error", "Debe cargar el atractivo.");
+        }//if-else
     }//guardar
 
     function mostrarMensaje(estado,mensaje){

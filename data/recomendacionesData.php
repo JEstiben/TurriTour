@@ -1,16 +1,16 @@
 <?php
 
-include_once '../../data/data.php';
-include_once '../../data/euclides.php';
+include_once 'data.php';
+include_once 'euclides.php';
 
-class restApiData extends Data {
+class recomendacionesData extends Data {
 
     private $respuesta = Array();
 
-    private $atributos = ['distancia', 'duracion'];
+    private $atributos = ['distancia', 'duracion', 'tipoCamino'];
 
-	public function rutas($distancia, $duracion, $tipoCamino, $latitudGPS, $longitudGPS){
-        $datosUsuario = array('distancia' => $distancia, 'duracion' => $duracion, 'tipoCamino' => $tipoCamino);
+	public function recomendaciones($distancia, $duracion, $tipoCamino){
+        $datosUsuario = array('distancia' => $distancia, 'duracion' => $duracion, 'tipoCamino' => $this->tipoCamino($tipoCamino));
 
         $conexion = mysqli_connect($this->server, $this->user, $this->password, $this->db);
         $conexion->set_charset('utf8');
@@ -21,7 +21,7 @@ class restApiData extends Data {
         mysqli_close($conexion);
 
         $registrosBaseDatos = [];
-        $atractivos = $this->atractivos($tipoCamino);
+        //$atractivos = $this->atractivos($tipoCamino);
 
         while ($registro = mysqli_fetch_array($resultado)) {
             $registrosBaseDatosActual = array(
@@ -29,17 +29,34 @@ class restApiData extends Data {
                 'distancia' => $registro['distancia_ruta'],
                 'duracion' => $registro['duracion_ruta'],
                 'origen' => $registro['punto_partida_ruta'],
-                'destino' => $registro['punto_llegada_ruta']);
-            $registrosBaseDatosActual["atractivos"] = $atractivos;
+                'destino' => $registro['punto_llegada_ruta'],
+                'tipoCamino' => $registro['tipo_camino_atractivo']);
+            //$registrosBaseDatosActual["atractivos"] = $atractivos;
             array_push($registrosBaseDatos, $registrosBaseDatosActual);
         }//end while
 
-        $respuesta[] = euclides($datosUsuario, $registrosBaseDatos, $this->atributos);
+        $rutas = euclides($datosUsuario, $registrosBaseDatos, $this->atributos);
+        if(count($rutas) > 0){
+            return ("true");
+        }else{
+            return ("false");
+        }
+    }//recomendaciones
 
-        echo json_encode($respuesta, JSON_PRETTY_PRINT);
-    }//rutas
+    public function tipoCamino($tipoCamino){
+        switch ($tipoCamino) {
+            case 'Asfalto':
+                return 1;
+            case 'Piedra':
+                return 2;
+            case 'Tierra':
+                return 3;
+            default:
+                return 2;
+        }//switch
+    }//tipoCamino
 
-    public function atractivos($tipoCamino) {
+    /*public function atractivos($tipoCamino) {
         $conexion = mysqli_connect($this->server, $this->user, $this->password, $this->db);
         $conexion->set_charset('utf8');
 
@@ -68,7 +85,7 @@ class restApiData extends Data {
         }//end while
 
         return $atractivos;
-    }//atractivos
+    }//atractivos*/
 
 }//end class
 

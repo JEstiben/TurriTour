@@ -14,14 +14,14 @@ class rutaBusiness {
         return $this->rutaData->registrarRuta($ruta);
     }//crear
 
-    /*public function obtenerAtractivo() {
-        return $this->atractivoData->obtenerAtractivo();
-    }//obteneratractivo
-
-    public function obtenerAtractivoId($idAtractivo) {
-        return $this->atractivoData->obtenerAtractivoId($idAtractivo);
+    public function obtenerRutaId($idRuta) {
+        return $this->rutaData->obtenerRutaId($idRuta);
     }//obteneratractivoId
-    */
+
+    public function obtenerRutaEuclides() {
+        return $this->rutaData->obtenerRutaEuclides();
+    }//obtenerRutaEuclides
+
     public function eliminarRutas() {
         return $this->rutaData->eliminarRutas();
     }//eliminar

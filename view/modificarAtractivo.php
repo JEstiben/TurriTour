@@ -3,74 +3,113 @@ include '../public/header.php';
 ?>
 
 <?php
-    include '../business/atractivoBusiness/atractivoBusiness.php';
-
-    $atractivoBusiness = new atractivoBusiness();
-    $atractivo = $atractivoBusiness->obtenerAtractivoId($_POST["idAtractivo"]);
+    include '../business/atractivoBusiness.php';
+    if(session_status() != 2){
+        session_start();
+    }
+    if(isset($_SESSION['Usuario'])){
+        $atractivoBusiness = new atractivoBusiness();
+        $atractivo = $atractivoBusiness->obtenerAtractivoId($_POST["idAtractivo"]);
+    }
 ?>
 
 <!-- Contenido -->
 <div class="about">
 	<div class="container">
-		<div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em;">
+		<?php
+            if(session_status() != 2){
+                session_start();
+            }
+            if(isset($_SESSION['Usuario'])){
+        ?>
+        <div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em;">
 			<div class="col-md-offset-1 col-md-10">
-				<div class="col-md-12" style="text-align: center;">
-					<h2>Modificar Atractivo Turístico</h2>
-				</div>
-				<div class="col-md-offset-3 col-md-6">
-					<h2>
-                    	<div id="map"></div>
-                    	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1JuYmoq83Om5mLz0qyg_k1viClteC2NU&callback=initMap"></script>
-                	</h2>
-				</div>
-				
-				<div class="col-md-12" style="text-align: center;">
-					<div class="col-md-3" style="text-align: center;">
-							<label>Atractivo</label>
-							<?php
-                                echo '<input class="form-control" type="text" name="lugar" id="lugar" value="'.$atractivo->getNombreAtractivo().'" disabled>';
-                            ?>
-							<label>Latitud</label>
-							<input class="form-control" type="text" name="lat" id="lat" disabled>
-							<label>Longitud</label>
-							<input class="form-control" type="text" name="lon" id="lon" disabled>
-					</div>
-					<div class="col-md-offset-1 col-md-4" style="text-align: center;">
-						<label>Tipo Camino</label>
-                        <select id="tipo_camino" name="tipo_camino" class="form-control">
+                <form method="post" id="formulario" enctype="multipart/form-data">
+    				<div class="col-md-12" style="text-align: center;">
+    					<h2>Modificar Atractivo Tur&iacute;stico</h2>
+    				</div>
+    				<div class="col-md-offset-3 col-md-6">
+    					<h2>
+                        	<div id="map"></div>
+                        	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1JuYmoq83Om5mLz0qyg_k1viClteC2NU&callback=initMap"></script>
+                    	</h2>
+    				</div>
+    				
+    				<div class="col-md-12" style="text-align: center;">
+    					<div class="col-md-3" style="text-align: center;">
+    							<label>Atractivo</label>
+    							<?php
+                                    echo '<input type="hidden" name="idAtractivo" id="idAtractivo" value="'.$_POST["idAtractivo"].'" />';
+                                    echo '<input class="form-control" type="text" name="atractivo" id="atractivo" value="'.$atractivo->getNombreAtractivo().'" disabled>';
+                                ?>
+    							<label>Latitud</label>
+    							<input class="form-control" type="text" name="latitud" id="latitud" disabled>
+    							<label>Longitud</label>
+    							<input class="form-control" type="text" name="longitud" id="longitud" disabled>
+    					</div>
+    					<div class="col-md-offset-1 col-md-4" style="text-align: center;">
+    						<label>Tipo Camino</label>
+                            <select id="tipo_camino" name="tipo_camino" class="form-control">
+                                <?php
+                                echo $atractivo->getTipoCaminoAtractivo();
+                                    if($atractivo->getTipoCaminoAtractivo() == "Asfalto"){
+                                ?>
+                                    <option selected="true" value="Asfalto">Asfalto</option>
+                                    <option value="Piedra">Piedra</option>
+                                    <option value="Tierra">Tierra</option>
+                                <?php
+                                    }else if($atractivo->getTipoCaminoAtractivo() == "Piedra"){
+                                ?>
+                                    <option value="Asfalto">Asfalto</option>
+                                    <option selected="true" value="Piedra">Piedra</option>
+                                    <option value="Tierra">Tierra</option>
+                                <?php
+                                    }else if($atractivo->getTipoCaminoAtractivo() == "Tierra"){
+                                ?>
+                                    <option value="Asfalto">Asfalto</option>
+                                    <option value="Piedra">Piedra</option>
+                                    <option selected="true" value="Tierra">Tierra</option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+    						<label>Imagen</label>
+    						<div class="fileUpload btn btn-success" style="text-align: center;">
+    						    <span>Subir imagen</span>
+    						    <input type="file" name="imagen" id="imagen" class="upload" accept="image/jpeg"/>
+    						</div>
+    						<label>Link video</label>
+    						<?php
+                                echo '<input class="form-control" type="text" name="video" id="video" value="'.$atractivo->getVideoAtractivo().'">'
+    						?>
+                            <input type="button" value="Modificar" name="modifica" id="modifica" onclick="modificar();" class="btn btn-success"/>
+    					</div>
+    					<div class="col-md-offset-1 col-md-3" style="text-align: center;">
+    						<label>Descripci&oacute;n</label>
                             <?php
-                                if($atractivo->getNombreAtractivo() == "Asfalto"){
+                                echo '<textarea class="form-control" rows="7" name="descripcion" id="descripcion">'.$atractivo->getDescripcionAtractivo().'</textarea>'
                             ?>
-                            <?php
-                                }else if(){
-                            ?>
-                            <?php
-                                }else if(){
-                            ?>
-                            <?php
-                                }
-                            ?>
-                            <option selected="true" value="Asfalto">Asfalto</option>
-                            <option value="Piedra">Piedra</option>
-                            <option value="Tierra">Tierra</option>
-                        </select>
-						<label>Imagen</label>
-						<div class="fileUpload btn btn-success" style="text-align: center;">
-						    <span>Subir imagen</span>
-						    <input type="file" name="imagen" id="imagen" class="upload" accept="image/jpeg"/>
-						</div>
-						<label>Link video</label>
-						<input class="form-control" type="text" name="video" id="video">
-						<input type="button" value="Guardar" name="guarda" id="guarda" onclick="modificar();" class="btn btn-success"/>
-					</div>
-					<div class="col-md-offset-1 col-md-3" style="text-align: center;">
-						<label>Descripci&oacute;n</label>
-						<textarea class="form-control" rows="7" name="descripcion" id="descripcion"></textarea>
-					</div>
-				</div>
-
+    					</div>
+    				</div>
+                </form>
 			</div>
 		</div>
+        <?php
+            }else{
+        ?>
+        <div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-radius: 2em;">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="col-md-offset-3 col-md-6" style="text-align: center;">
+                    <img style="max-width: 60%;" src="../images/error.png">
+                </div>
+                <div class="col-md-12" style="text-align: center;">
+                    <h2>Error al cargar la p&aacute;gina.</h2>
+                </div>
+            </div>
+        </div>
+        <?php
+            }
+        ?>
 	</div>
 </div>
 <!-- Contenido -->
@@ -88,23 +127,23 @@ include '../public/footer.php';
             zoom: 15
         });
         var geocoder = new google.maps.Geocoder();
-        if(document.getElementById('lugar').value != ""){
+        if(document.getElementById('atractivo').value != ""){
         	geocodeAddress(geocoder, map);
         }
     }
 
 	function geocodeAddress(geocoder, resultsMap) {
-        var lugar = document.getElementById('lugar').value;
+        var atractivo = document.getElementById('atractivo').value;
 
-        geocoder.geocode({'address': lugar}, function(results, status) {
+        geocoder.geocode({'address': atractivo}, function(results, status) {
           if (status === 'OK') {
             resultsMap.setCenter(results[0].geometry.location);
             var marker = new google.maps.Marker({
               map: resultsMap,
               position: results[0].geometry.location
             });            
-            document.getElementById("lat").value = results[0].geometry.location.lat();
-            document.getElementById("lon").value = results[0].geometry.location.lng();
+            document.getElementById("latitud").value = results[0].geometry.location.lat();
+            document.getElementById("longitud").value = results[0].geometry.location.lng();
 
           } else {
             alert('La localización no fue satisfactoria por la siguiente razón: ' + status);
@@ -113,29 +152,55 @@ include '../public/footer.php';
     }
 
     function modificar() {
-      	var formData = new FormData(document.getElementById("formulario"));
-      	formData.append("crearAtractivo", "crearAtractivo");
-      	formData.append("latitud", document.getElementById("latitud").value);
-      	formData.append("longitud", document.getElementById("longitud").value);
-      	$.ajax({
-		    url: '../business/atractivoAction.php',
-            type: "POST",
-		    dataType: "html",
-		    data: formData,
-		    cache: false,
-		    contentType: false,
-		    processData: false
-		})
-	    .done(function(data){
-	    	if(data == "true"){
-                mostrarMensaje("success", "Éxito al crear el atractivo.");
-            }else if(data == "false"){
-                mostrarMensaje("error", "Error al crear el atractivo.");
-            }else if(data == "error"){
-                mostrarMensaje("error", "El formato de la imagen es incorrecto.");
+      	var latitud = document.getElementById("latitud").value;
+        var longitud = document.getElementById("longitud").value;
+
+        if (latitud != "" && longitud != ""){
+            var imagen = document.getElementById("imagen").value;
+
+            if(imagen != ""){
+                var video = document.getElementById("video").value;
+
+                if(video != ""){
+                    var descripcion = document.getElementById("descripcion").value;
+
+                    if(descripcion != ""){
+                        var formData = new FormData(document.getElementById("formulario"));
+                        formData.append("modificarAtractivo", "modificarAtractivo");
+                        formData.append("atractivo", document.getElementById("atractivo").value);
+                        formData.append("latitud", document.getElementById("latitud").value);
+                        formData.append("longitud", document.getElementById("longitud").value);
+                        $.ajax({
+                            url: '../business/atractivoAction.php',
+                            type: "POST",
+                            dataType: "html",
+                            data: formData,
+                            cache: false,
+                            contentType: false,
+                            processData: false
+                        })
+                        .done(function(data){
+                            if(data == "true"){
+                                mostrarMensaje("success", "Éxito al modificar el atractivo.");
+                            }else if(data == "false"){
+                                mostrarMensaje("error", "Error al modificar el atractivo.");
+                            }else if(data == "error"){
+                                mostrarMensaje("error", "El formato de la imagen es incorrecto.");
+                            }//if-else
+                        });
+                    }else{
+                        mostrarMensaje("error", "Debe agregar una descripcion para el atractivo.");
+                    }//if-else
+                }else{
+                    mostrarMensaje("error", "Debe agregar una dirección para el video del atractivo.");
+                }//if-else
+            }else{
+                mostrarMensaje("error", "Debe cargar una imagen.");
             }//if-else
-	    });
-    }//guardar
+        }else{
+            mostrarMensaje("error", "Debe cargar el atractivo.");
+        }//if-else
+    }//modificar
 
     function mostrarMensaje(estado,mensaje){
         if(estado === "success"){

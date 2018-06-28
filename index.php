@@ -23,11 +23,6 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //web-fonts -->
 </head>
 <body>
-<?php  
-	if (isset($_POST['datos'])) {
-    	echo $_POST['datos'];
-	}//if
-?>
 <div class="main-agile">
 	<!-- header -->
 	<div class="header">
@@ -50,24 +45,32 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 					<div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
 						<nav class="menu menu--miranda">
 							<ul class="nav navbar-nav menu__list">
-								<li class="menu__item"><a href="index.php" class="menu__link">Inicio</a></li>
-								<li class="menu__item"><a href="view/criterios.php" class="menu__link">Rutas</a></li>
-								<li class="dropdown menu__item">
-									<a href="#" class="dropdown-toggle menu__link" data-toggle="dropdown">Rutas<b class="caret"></b></a>
-										<ul class="dropdown-menu agile_short_dropdown">
-											<li><a href="view/obtenerRutaADM.php">Ver</a></li>
-											<li><a href="view/CrearRuta.php">Crear</a></li>
-										</ul>
-								</li>
-								<li class="dropdown menu__item">
-									<a href="#" class="dropdown-toggle menu__link" data-toggle="dropdown">Atractivos<b class="caret"></b></a>
-										<ul class="dropdown-menu agile_short_dropdown">
-											<li><a href="view/obtenerAtractivoADM.php">Ver</a></li>
-											<li><a href="view/crearAtractivo.php">Crear</a></li>
-										</ul>
-								</li>
-								<li class="menu__item"><a href="view/informacion.php" class="menu__link">Información</a></li>
-								<li class="menu__item"><a href="#" class="menu__link">Iniciar sesión</a></li>
+								<?php
+				                    if(session_status() != 2){
+				                        session_start();
+				                    }
+				                    if(isset($_SESSION['Usuario'])){
+				                ?>
+				                    <li class="menu__item"><a href="index.php" class="menu__link">Inicio</a></li>
+									<li class="dropdown menu__item">
+										<a href="#" class="dropdown-toggle menu__link" data-toggle="dropdown">Atractivos<b class="caret"></b></a>
+											<ul class="dropdown-menu agile_short_dropdown">
+												<li><a href="view/obtenerAtractivoADM.php">Ver</a></li>
+												<li><a href="view/crearAtractivo.php">Crear</a></li>
+											</ul>
+									</li>
+									<li class="menu__item"><a href="view/informacion.php" class="menu__link">Información</a></li>
+									<li class="menu__item"><a onclick="cerrarSesion();" class="menu__link">Cerrar sesión</a></li>
+				                <?php
+				                    }else{
+				                ?>
+				                	<li class="menu__item"><a href="index.php" class="menu__link">Inicio</a></li>
+									<li class="menu__item"><a href="view/criterios.php" class="menu__link">Rutas</a></li>
+									<li class="menu__item"><a href="view/informacion.php" class="menu__link">Información</a></li>
+									<li class="menu__item"><a href="view/iniciarSesion.php" class="menu__link">Iniciar sesión</a></li>
+				                <?php
+				                    }
+				                ?>
 							</ul>
 						</nav>
 					</div>
@@ -151,6 +154,12 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 				pagination : true,
 			});
 		});
+
+		function cerrarSesion() {
+			$.post("business/sesionAction.php",{'cerrarSesion': 'cerrarSesion'}, function(data){
+                location.href ="index.php";
+            });
+	    }//cerrarSesion
 	</script>
 	<!-- //Owl-Carousel-JavaScript -->  
 
