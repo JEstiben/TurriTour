@@ -22,7 +22,7 @@ echo '<div class="col-md-offset-1 col-md-10" style="background: #8492A6; border-
 	echo '<div class="col-md-offset-1 col-md-3" style="text-align: center;">';
 		echo '<h4>'.$atractivo->getNombreAtractivo().'</h4>';
 		echo '<a href="detalleAtractivo.php?idAtr='.$atractivo->getIdAtractivo().'">';
-			echo '<img style="max-width: 100%; margin: 0.5em auto;" src="../images/'.$atractivo->getImagenAtractivo().'">';
+			echo '<img style="max-width: 100%; margin: 0.5em auto;" src="../images/atractivos/'.$atractivo->getImagenAtractivo().'">';
 		echo '</a>';
 	echo '</div>';
 	echo '<div class="col-md-8" style="text-align: center;">';

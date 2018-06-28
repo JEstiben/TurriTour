@@ -1,5 +1,5 @@
 <?php
-    class atractivo {
+    class atractivoBayes {
         private $IdAtractivo;
         private $NombreAtractivo;
         private $DescripcionAtractivo;
@@ -8,10 +8,12 @@
         private $LatitudAtractivo;
         private $LongitudAtractivo;
         private $TipoCaminoAtractivo;
+        private $Duracion;
+        private $Distancia;
 
 
-        function atractivo($IdAtractivo, $NombreAtractivo, $DescripcionAtractivo, $ImagenAtractivo,
-        $VideoAtractivo, $LongitudAtractivo, $LatitudAtractivo, $TipoCaminoAtractivo){
+        function atractivoBayes($IdAtractivo, $NombreAtractivo, $DescripcionAtractivo, $ImagenAtractivo,
+        $VideoAtractivo, $LongitudAtractivo, $LatitudAtractivo, $TipoCaminoAtractivo, $Distancia, $Duracion){
             $this->IdAtractivo = $IdAtractivo;
             $this->NombreAtractivo = $NombreAtractivo;
             $this->DescripcionAtractivo = $DescripcionAtractivo;
@@ -20,6 +22,8 @@
             $this->LongitudAtractivo = $LongitudAtractivo;
             $this->LatitudAtractivo = $LatitudAtractivo;
             $this->TipoCaminoAtractivo = $TipoCaminoAtractivo;
+            $this->Duracion = $Duracion;
+            $this->Distancia = $Distancia;
         }//atractivo
 
         /*GET*/
@@ -63,6 +67,16 @@
             return $this->TipoCaminoAtractivo;
         }
 
+        public function getDuracion()
+        {
+            return $this->Duracion;
+        }
+
+        public function getDistancia()
+        {
+            return $this->Distancia;
+        }
+
         /*SET*/
         public function setIdAtractivo($IdAtractivo)
         {
@@ -102,6 +116,16 @@
         public function setTipoCaminoAtractivo($TipoCaminoAtractivo)
         {
             $this->TipoCaminoAtractivo = $TipoCaminoAtractivo;
+        }
+
+        public function setDuracion($Duracion)
+        {
+            return $this->Duracion = $Duracion;
+        }
+
+        public function setDistancia($Distancia)
+        {
+            return $this->Distancia = $Distancia;
         }
     }//clase
 ?>

@@ -73,9 +73,9 @@ include '../business/atractivoBusiness.php';
     					?>
     					</select>
 
-    					<a href="obtenerAtractivo.php">
+    					<!--<a href="obtenerAtractivo.php">-->
 						<input type="submit" value="Ver Atracivos" id="atractivos" class="btn btn-accept"/>
-						</a>
+						<!--</a>-->
 						<br><br><br><br>
 					</div>
 				</div>
@@ -120,7 +120,7 @@ include '../public/footer.php';
                   llamadoCalcular(directionsService, directionsDisplay);
                   recomendacionesEuclides();
                 });
-                document.getElementById('atracivos').addEventListener('click', function() {
+                document.getElementById('atractivos').addEventListener('click', function() {
                   llamadoCalcular(directionsService, directionsDisplay);
                   recomendacionesBayes();
                 });

@@ -138,12 +138,52 @@ class atractivoData extends Data {
         return $atractivo;
     }//obteneratractivoId
 
+    public function registrarAtractivoBayes($atractivo, $distancia, $tiempo) {
+
+        $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
+        $conn->set_charset('utf8');
+
+        $querySelect = "SELECT * FROM tb_atractivo Where id_atractivo = '".$atractivo->getIdAtractivo()."';";
+        $resultadoSelect = mysqli_query($conn,$querySelect);
+
+        while($row = mysqli_fetch_array($resultadoSelect)){
+            $atractivo->setNombreAtractivo($row['nombre_atractivo']);
+            $atractivo->setDescripcionAtractivo($row['descripcion_atractivo']);
+            $atractivo->setImagenAtractivo($row['imagen_atractivo']);
+            $atractivo->setVideoAtractivo($row['video_atractivo']);
+            $atractivo->setLatitudAtractivo($row['latitud_atractivo']);
+            $atractivo->setLongitudAtractivo($row['longitud_atractivo']);
+            $atractivo->setTipoCaminoAtractivo($row['tipo_camino_atractivo']);
+        }//end while
+
+        $queryInsert = "INSERT INTO tb_atractivo_valles VALUES ('".$atractivo->getIdatractivo()."', " .
+        "'".$atractivo->getNombreAtractivo()."'". "," .
+        "'".$atractivo->getDescripcionAtractivo()."'". "," .
+        "'".$atractivo->getImagenAtractivo()."'". "," .
+        "'".$atractivo->getVideoAtractivo()."'". "," .
+        "'".$atractivo->getLatitudAtractivo()."'". "," .
+        "'".$atractivo->getLongitudAtractivo()."'". "," .
+        "'".$atractivo->getTipoCaminoAtractivo()."'". "," .
+        "'".$distancia."'". "," .
+        "'".$tiempo."'". ");";
+
+        $resultado = mysqli_query($conn, $queryInsert);
+        mysqli_close($conn);
+
+        if($resultado){
+            return ("true");
+        }else{
+            return ("false");
+        }//if-else
+
+    }//crear Atractivo
+
     public function obtenerAtractivoBayes() {
 
         $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
         $conn->set_charset('utf8');
 
-        $querySelect = "SELECT * FROM tb_ruta_valles;";
+        $querySelect = "SELECT * FROM tb_atractivo_valles;";
         $resultado = mysqli_query($conn, $querySelect);
         mysqli_close($conn);
         $atrativos = [];
@@ -162,7 +202,7 @@ class atractivoData extends Data {
         $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
         $conn->set_charset('utf8');
 
-        $queryDelete = "DELETE FROM tb_ruta_valles;";
+        $queryDelete = "DELETE FROM tb_atractivo_valles;";
 
         $resultado = mysqli_query($conn, $queryDelete);
         mysqli_close($conn);

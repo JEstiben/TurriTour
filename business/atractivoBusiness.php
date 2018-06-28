@@ -30,6 +30,10 @@ class atractivoBusiness {
         return $this->atractivoData->obtenerAtractivoId($idAtractivo);
     }//obteneratractivoId
 
+    public function registrarAtractivoBayes($atractivo, $distancia, $tiempo) {
+        return $this->atractivoData->registrarAtractivoBayes($atractivo, $distancia, $tiempo);
+    }//crear Atractivo
+
     public function obtenerAtractivoBayes() {
         return $this->atractivoData->obtenerAtractivoBayes();
     }//obteneratractivoBayes
