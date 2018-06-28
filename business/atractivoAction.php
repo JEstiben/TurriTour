@@ -41,7 +41,8 @@ if (isset($_POST['crearAtractivo'])) {
         $nuevoNombre = limpiarNombre($nombre);
         $imagen = str_replace($nombre, $nuevoNombre, $imagen);
         $destino="../images/atractivos/".$imagen;
-        $atractivo = new atractivo($_POST["idAtractivo"], $_POST['atractivo'], $_POST['descripcion'], $imagen, $_POST['video'], $_POST['longitud'], $_POST['latitud'], $_POST['tipo_camino']);
+        $video = str_replace("watch?v=", "embed/", $_POST['video']);
+        $atractivo = new atractivo($_POST["idAtractivo"], $_POST['atractivo'], $_POST['descripcion'], $imagen, $video, $_POST['longitud'], $_POST['latitud'], $_POST['tipo_camino']);
         $atractivoBusiness = new atractivoBusiness();
         $resultado = $atractivoBusiness->modificarAtractivo($atractivo);
         if($resultado == "true"){
