@@ -10,9 +10,13 @@ class recomendacionesBusiness {
         $this->recomendacionesData = new recomendacionesData();
     }//constructor
 
-    public function recomendaciones($distancia, $duracion, $tipoCamino) {
-        return $this->recomendacionesData->recomendaciones($distancia, $duracion, $tipoCamino);
-    }//recomendaciones
+    public function recomendacionesEuclides($distancia, $duracion, $tipoCamino) {
+        return $this->recomendacionesData->recomendacionesEuclides($distancia, $duracion, $tipoCamino);
+    }//recomendacionesEuclides
+
+    public function recomendacionesBayes($distancia, $duracion, $tipoCamino) {
+        return $this->recomendacionesData->recomendacionesBayes($distancia, $duracion, $tipoCamino);
+    }//recomendacionesBayes
 }//class
 
 ?>

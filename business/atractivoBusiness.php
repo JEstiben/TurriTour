@@ -30,6 +30,14 @@ class atractivoBusiness {
         return $this->atractivoData->obtenerAtractivoId($idAtractivo);
     }//obteneratractivoId
 
+    public function obtenerAtractivoBayes() {
+        return $this->atractivoData->obtenerAtractivoBayes();
+    }//obteneratractivoBayes
+
+    public function eliminarAtractivoBayes() {
+        return $this->atractivoData->eliminarAtractivoBayes();
+    }//eliminarAtractivoBayes
+
     public function eliminarAtractivo($idAtractivo) {
         return $this->atractivoData->eliminarAtractivo($idAtractivo);
     }//eliminarAtractivo

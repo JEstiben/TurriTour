@@ -77,15 +77,15 @@ class rutaData extends Data {
         $querySelect = "SELECT id_ruta,distancia_ruta,duracion_ruta,punto_partida_ruta,punto_llegada_ruta,tipo_camino_atractivo FROM tb_ruta_euclides ORDER BY id_ruta ASC LIMIT 5;";
         $resultado = mysqli_query($conn, $querySelect);
         mysqli_close($conn);
-        $atrativo = [];
+        $rutas = [];
 
         while ($row = mysqli_fetch_array($resultado)) {
-            $atractivo = new ruta($row['id_ruta'], $row['punto_partida_ruta'], $row['punto_llegada_ruta'],
+            $ruta = new ruta($row['id_ruta'], $row['punto_partida_ruta'], $row['punto_llegada_ruta'],
             $row['duracion_ruta'],$row['distancia_ruta'], $row['tipo_camino_atractivo']);
-            array_push($atrativo, $atractivo);
+            array_push($rutas, $ruta);
         }//end while
 
-        return $atrativo;
+        return $rutas;
     }//obteneratractivo
 
     public function obtenerRuta() {
@@ -128,9 +128,9 @@ class rutaData extends Data {
         $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
         $conn->set_charset('utf8');
 
-        $queryInsert = "DELETE FROM tb_ruta;";
+        $queryDelete = "DELETE FROM tb_ruta;";
 
-        $resultado = mysqli_query($conn, $queryInsert);
+        $resultado = mysqli_query($conn, $queryDelete);
         mysqli_close($conn);
 
         if($resultado){
@@ -144,9 +144,9 @@ class rutaData extends Data {
         $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
         $conn->set_charset('utf8');
 
-        $queryInsert = "DELETE FROM tb_ruta_euclides;";
+        $queryDelete = "DELETE FROM tb_ruta_euclides;";
 
-        $resultado = mysqli_query($conn, $queryInsert);
+        $resultado = mysqli_query($conn, $queryDelete);
         mysqli_close($conn);
 
         if($resultado){

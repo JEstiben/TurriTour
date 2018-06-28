@@ -138,6 +138,42 @@ class atractivoData extends Data {
         return $atractivo;
     }//obteneratractivoId
 
+    public function obtenerAtractivoBayes() {
+
+        $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
+        $conn->set_charset('utf8');
+
+        $querySelect = "SELECT * FROM tb_ruta_valles;";
+        $resultado = mysqli_query($conn, $querySelect);
+        mysqli_close($conn);
+        $atrativos = [];
+
+        while ($row = mysqli_fetch_array($resultado)) {
+            $atractivo = new atractivo($row['id_atractivo'], $row['nombre_atractivo'], $row['descripcion_atractivo'],
+            $row['imagen_atractivo'],$row['video_atractivo'], $row['longitud_atractivo'], $row['latitud_atractivo'],
+            $row['tipo_camino_atractivo']);
+            array_push($atrativos, $atractivo);
+        }//end while
+
+        return $atrativos;
+    }//obteneratractivoBayes
+
+    public function eliminarAtractivoBayes() {
+        $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
+        $conn->set_charset('utf8');
+
+        $queryDelete = "DELETE FROM tb_ruta_valles;";
+
+        $resultado = mysqli_query($conn, $queryDelete);
+        mysqli_close($conn);
+
+        if($resultado){
+            return ("true");
+        }else{
+            return ("false");
+        }//if-else
+    }//eliminarAtractivoBayes
+
     public function eliminarAtractivo($idAtractivo) {
         $conn = mysqli_connect($this->server, $this->user, $this->password, $this->db);
         $conn->set_charset('utf8');
