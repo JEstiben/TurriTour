@@ -28,7 +28,7 @@ include '../public/header.php';
     include '../business/atractivoBusiness.php';
 
     $atractivoBusiness = new atractivoBusiness();
-    $atractivo = $atractivoBusiness->obtenerAtractivoId($_GET["id"]);
+    $atractivo = $atractivoBusiness->obtenerAtractivoId($_GET["idAtr"]);
 ?>
 
 <!-- Contenido -->

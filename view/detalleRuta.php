@@ -48,7 +48,7 @@ include '../public/header.php';
             ?>
             <h2>Destino: 
 							<?php
-                echo '<a href="detalleAtractivo.php?id='.$ruta->getIdRuta().'&origen=1">'.$ruta->getPuntoFinal().' </a>';
+                echo '<a href="detalleAtractivo.php?id='.$ruta->getIdRuta().'&idAtr='.$ruta->getIdRuta().'&origen=1">'.$ruta->getPuntoFinal().' </a>';
               ?>
 						</h2>						
 					</div>
@@ -56,7 +56,7 @@ include '../public/header.php';
               <?php
               echo '<h1>Atractivos de interés</h1>';
                 foreach ($atrac as $value) {
-                   echo '<a href="detalleAtractivo.php?id='.$value->getIdAtractivo().'&origen=1"><img style="max-width: 150px; max-height: 150px; margin: 0.5em auto;" src="../images/atractivos/'.$value->getImagenAtractivo().'">                                          </a>';  
+                   echo '<a href="detalleAtractivo.php?id='.$ruta->getIdRuta().'&idAtr='.$value->getIdAtractivo().'&origen=1">                                          <img style="max-width: 150px; max-height: 150px; margin: 0.5em auto;" src="../images/atractivos/'.$value->getImagenAtractivo().'">                                          </a>';  
                 }        
                 echo '<input type="hidden" name="origen" id="origen" value="'.$ruta->getPuntoInicial().'" />';
                 echo '<input type="hidden" name="destino" id="destino" value="'.$ruta->getPuntoFinal().'" />';
