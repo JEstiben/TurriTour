@@ -56,7 +56,7 @@ include '../public/header.php';
               <?php
               echo '<h1>Atractivos de interés</h1>';
                 foreach ($atrac as $value) {
-                   echo '<a href="detalleAtractivo.php?id='.$value->getIdAtractivo().'">       <img style="max-width: 15%; margin: 0.5em auto;" src="../images/atractivos/'.$value->getImagenAtractivo().'">                                          </a>';  
+                   echo '<a href="detalleAtractivo.php?id='.$value->getIdAtractivo().'&origen=1"><img style="max-width: 150px; max-height: 150px; margin: 0.5em auto;" src="../images/atractivos/'.$value->getImagenAtractivo().'">                                          </a>';  
                 }        
                 echo '<input type="hidden" name="origen" id="origen" value="'.$ruta->getPuntoInicial().'" />';
                 echo '<input type="hidden" name="destino" id="destino" value="'.$ruta->getPuntoFinal().'" />';

@@ -164,6 +164,7 @@ include '../public/footer.php';
       	var atractivoActual;
       	for(var j=0; j<atractivosUnoPorUno.length; j++){//teniendo los atributos todos "id-nombre-tipocamino" se crea cada uno por separado
       		atractivoActual = atractivosUnoPorUno[j].split("-");
+          alert(atractivoActual);
       		//ID = atractivoActual[0]
       		//Nombre = atractivoActual[1]
       		//TipoTerreno = atractivoActual[2]
@@ -172,6 +173,7 @@ include '../public/footer.php';
       		
 
       	}//for que recorre todos los atractivos
+        recomendacionesEuclides();
       	//alert("Finichin");
       }
 
@@ -217,7 +219,7 @@ include '../public/footer.php';
             	alert(data);
             });
 
-            }
+            }//for
           } else {
           // === if we were sending the requests to fast, try this one again and increase the delay
           if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
@@ -233,13 +235,56 @@ include '../public/footer.php';
       }//calculateAndDisplayRoute
 
       function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}//sleep
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+          if ((new Date().getTime() - start) > milliseconds){
+            break;
+          }
+        }
+      }//sleep
+
+      function recomendacionesEuclides() {
+      var parameters = {
+          "recomendaciones" : 'recomendaciones',
+          "distancia" : document.getElementById('distacia').value,
+          "duracion" : document.getElementById('tiempo').value,
+          "tipoCamino" : document.getElementById('terreno').value
+      };
+
+      $.post("../business/recomendacionesAction.php",parameters, function(data){
+        if(data == "true"){
+          location.href = "obtenerRuta.php";
+        }else if(data == "false"){
+          mostrarMensaje("error", "No se encontraron rutas.");
+        }//if-else
+      });
+    }//recomendaciones
+
+    function mostrarMensaje(estado,mensaje){
+        if(estado === "success"){
+            reset();
+            alertify.success(mensaje);
+            return false;
+        }else if(estado === "error"){
+            reset();
+            alertify.error(mensaje);
+            return false;
+        }//if-else
+    }//mostrarMensaje
+
+    /*FUNCION QUE LIMPIA EL ESPACIO PARA COLOCAR LAS NOTIFICACIONES*/
+    function reset () {
+        $("#toggleCSS").attr("href", "../js/alertify.default.css");
+        alertify.set({
+            labels : {
+                ok     : "OK",
+                cancel : "Cancel"
+            },
+            delay : 5000,
+            buttonReverse : false,
+            buttonFocus   : "ok"
+        });
+    }//reset
 
     </script>
     <script async defer

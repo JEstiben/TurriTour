@@ -117,11 +117,11 @@ class rutaData extends Data {
         mysqli_close($conn);
 
         while ($row = mysqli_fetch_array($resultado)) {
-            $atractivo = new ruta($row['id_ruta'], $row['punto_partida_ruta'], $row['punto_llegada_ruta'],
+            $ruta = new ruta($row['id_ruta'], $row['punto_partida_ruta'], $row['punto_llegada_ruta'],
             $row['duracion_ruta'],$row['distancia_ruta'], $row['tipo_camino_atractivo']);
         }//end while
 
-        return $atractivo;
+        return $ruta;
     }//obteneratractivoId
 
     public function eliminarRutas() {
