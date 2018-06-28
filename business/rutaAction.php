@@ -4,7 +4,7 @@ include 'rutaBusiness.php';
 
 if (isset($_POST['crearRuta'])) {
 
-	    $rutaTemp = new atractivo(0, $_POST['puntoinicial'], $_POST['puntofinal'], $imagen, $_POST['tiempo'], $_POST['distancia'], $_POST['tipocamino']);
+	    $rutaTemp = new atractivo($_POST['id'], $_POST['puntoinicial'], $_POST['puntofinal'], $_POST['tiempo'], $_POST['distancia'], $_POST['tipocamino']);
 
         $rutaBusiness = new rutaBusiness();
 		$resultado = $rutaBusiness->registrarRuta($rutaTemp);

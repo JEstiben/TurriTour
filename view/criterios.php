@@ -6,8 +6,8 @@ include '../business/atractivoBusiness.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
-<script src="jquery.min.js" type="text/javascript"></script>
-<script src="./jquery-3.2.1.js"></script>
+<script src="../jquery.min.js" type="text/javascript"></script>
+<script src="jquery-3.2.1.js"></script>
 
 <!--Obtención de los atractivos-->
 	<?php
@@ -47,9 +47,10 @@ include '../business/atractivoBusiness.php';
 							<label>Ingrese la cantidad de tiempo que desea que desea durar durante el viaje:</label>							
 							<br><br><br>
 							<label>Seleccione el tipo de camino que desea transitar:</label>							
-							<a href="obtenerRuta.php">
-								<input type="button" value="Ver Rutas" name="rutas" id="rutas" class="btn btn-accept" src="obtenerRutaADM.php" />
-							</a>
+							<!--<a href="obtenerRuta.php">-->
+							<input type="submit" id="rutas" value="Cargar Ruta" class="btn btn-accept">
+								<!--<input type="button" value="Ver Rutas" name="rutas" id="rutas" class="btn btn-accept" src="obtenerRutaADM.php" />-->
+							<!--</a>-->
 					</div>					
 					<div class="col-md-6" style="text-align: center;">
 						<input class="form-control" type="text" name="distancia" id="distacia" placeholder="01.0KM">
@@ -93,10 +94,15 @@ include '../public/footer.php';
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
-          zoom: 13
+          zoom: 15
         });
+
+        var directionsService = new google.maps.DirectionsService;
+      	var directionsDisplay = new google.maps.DirectionsRenderer;
         infoWindow = new google.maps.InfoWindow;
         geocoder = new google.maps.Geocoder;
+
+
 
         // Aquí se obtiene la ubicación del usuario
         if (navigator.geolocation) {
@@ -109,6 +115,10 @@ include '../public/footer.php';
             geocodeLatLng(geocoder, map, infoWindow, latitudString);
 
             //
+            directionsDisplay.setMap(map);
+            document.getElementById('rutas').addEventListener('click', function() {
+          llamadoCalcular(directionsService, directionsDisplay);
+        });
 
           });
       }
@@ -121,16 +131,16 @@ include '../public/footer.php';
         geocoder.geocode({'location': latlng}, function(results, status) {
           if (status === 'OK') {
             if (results[0]) {
-              map.setZoom(13);
+              map.setZoom(15);
               var marker = new google.maps.Marker({
                 position: latlng,
                 map: map
               });
               map.setCenter(marker.position);
-              infowindow.setContent('Usted está aquí: '+results[0].formatted_address);
+              infowindow.setContent('Usted está aquí:'+results[0].formatted_address);
               infowindow.open(map, marker);
               ubicacion = results[0].formatted_address;//******************************************UBICACIÓN DEL USUARIO
-              document.getElementById('datos').value = ubicacion;
+              
             } else {
               window.alert('No se encontraron resultados');
             }
@@ -139,6 +149,95 @@ include '../public/footer.php';
           }
         });
       }//geocodeLatLng
+
+      function llamadoCalcular(directionsService, directionsDisplay){
+      	//obtener los atractivos y generar el arreglo
+      	var rutasParaEuclides = [];
+      	var distanciaRuta;
+      	var tiempoRuta;
+
+      	//obtencion de la cadena de atractivos en php
+      	var atractivosPHP = "<?php echo $cadenaAtractivos; ?>";
+      	atractivosPHP = atractivosPHP.slice(0, -1);//saco el último ";"
+      	var atractivosUnoPorUno = atractivosPHP.split(";");//aquí tengo los atractivos separando los valores por un "-"
+
+      	var atractivoActual;
+      	for(var j=0; j<atractivosUnoPorUno.length; j++){//teniendo los atributos todos "id-nombre-tipocamino" se crea cada uno por separado
+      		atractivoActual = atractivosUnoPorUno[j].split("-");
+      		//ID = atractivoActual[0]
+      		//Nombre = atractivoActual[1]
+      		//TipoTerreno = atractivoActual[2]
+      		//alert("Wasa"+j);
+      		calculateAndDisplayRoute(directionsService,directionsDisplay,atractivoActual);
+      		
+
+      	}//for que recorre todos los atractivos
+      	//alert("Finichin");
+      }
+
+      //función encargada de calcular las distancias y los tiempos y mandarlos a guardar
+      function calculateAndDisplayRoute(directionsService, directionsDisplay, atractivoActual) {
+      		
+        directionsService.route({
+          origin: ubicacion,
+          destination: atractivoActual[1],
+          optimizeWaypoints: true,
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+        	//alert("Id: "+atractivoActual[0] + "*** Nombre: "+atractivoActual[1] +" ***Ubicacion: "+ubicacion);
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+            var route = response.routes[0];
+
+            // For each route, display summary information.
+            for (var i = 0; i < route.legs.length; i++) {
+              var routeSegment = i + 1;
+              
+              //calculo de los valores para las rutas
+              distanciaRuta = route.legs[i].distance.value;//esto viene en metros se tiene que dividir entre 1000 para tener los kms
+              tiempoRuta = route.legs[i].duration.value;//esto viene en minutos y se tiene que dividr entre 60 para obtener las horas
+              //sleep(2000);
+              alert("Id: "+atractivoActual[0] + "*** Nombre: "+atractivoActual[1] +" ***Ubicacion: "+ubicacion+ " ***Distancia: "+distanciaRuta + " ***Tiempo: "+ tiempoRuta);
+              //enviar a insertar.
+
+              tiempoRuta = tiempoRuta/60;
+              distanciaRuta = distanciaRuta/1000;              	
+
+              var rutaEuclides = {
+                "crearRuta" : 'crearRuta',
+                "id" : atractivoActual[0],
+                "puntoinicial" : ubicacion,
+                "puntofinal" : atractivoActual[1],
+                "tiempo" : tiempoRuta,
+                "distancia" : distanciaRuta,
+                "tipocamino" : atractivoActual[2]
+            };
+
+            $.post("../business/rutaAction.php",rutaEuclides, function(data){ });
+
+            }
+          } else {
+          // === if we were sending the requests to fast, try this one again and increase the delay
+          if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+            delay++;
+          } else {
+            var reason="Code "+status;
+            var msg = 'address="' + search + '" error=' +reason+ '(delay='+delay+'ms)<br>';
+            document.getElementById("messages").innerHTML += msg;
+          }   
+        }
+        });
+    
+      }//calculateAndDisplayRoute
+
+      function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}//sleep
 
     </script>
     <script async defer
